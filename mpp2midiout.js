@@ -1,4 +1,5 @@
 var JZZ = require("jzz");
+console.log(JZZ().info());
 
 var MidiPort = JZZ().openMidiOut("TiMidity port 0");
 console.log(MidiPort.info());
