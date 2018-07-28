@@ -14,7 +14,7 @@ var ALSA = require("alsa");
 
 var Discord = require("discord.js");
 var DiscordBot = new Discord.Client();
-DiscordBot.login("todo");
+DiscordBot.login(require('./token'));
 
 DiscordBot.on("ready", async function(){
     var voiceChannel = DiscordBot.channels.get("339628587747639296");
