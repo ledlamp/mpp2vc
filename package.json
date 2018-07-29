@@ -4,7 +4,6 @@
     "discord.js": "^11.3.2",
     "jzz": "^0.5.2",
     "mpp-client": "^0.2.1",
-    "node-opus": "^0.3.0",
-    "puppeteer": "^1.6.1"
+    "node-opus": "^0.3.0"
   }
 }
