@@ -2,7 +2,7 @@
   "dependencies": {
     "alsa": "^0.0.2",
     "discord.js": "^11.3.2",
-    "jzz": "^0.5.2",
+    "midi": "^0.9.5",
     "mpp-client": "^0.2.1",
     "node-opus": "^0.3.0"
   }

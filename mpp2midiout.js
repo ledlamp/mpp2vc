@@ -1,8 +1,16 @@
-var JZZ = require("jzz");
-console.log(JZZ().info());
 
-var MidiPort = JZZ().openMidiOut("TiMidity port 0");
-console.log(MidiPort.info());
+var midi = require('midi');
+var MidiOutput = new midi.output();
+var portCount = MidiOutput.getPortCount();
+//console.log(`Found ${portCount} MIDI ports:`);
+for (let portNumber = 0; portNumber < portCount; portNumber++) {
+    let portName = MidiOutput.getPortName(portNumber)
+    //console.log(`Port ${portNumber}: ${portName}`);
+    if (portName == "TiMidity port 0") {
+        MidiOutput.openPort(portNumber);
+        break;
+    }
+}
 
 
 var MIDI_TRANSPOSE = -12;
@@ -19,8 +27,10 @@ var gMidiOutTest = function(note_name, vel, delay_ms) {
     if(note_number == -1) return;
     note_number = note_number + 9 - MIDI_TRANSPOSE;
 
-    MidiPort.wait(delay_ms).send([0x90, note_number, Math.floor(vel)]);
-  
+    //MidiOutput.wait(delay_ms).send([0x90, note_number, Math.floor(vel)]); //JZZ
+    setTimeout(function(){
+        MidiOutput.sendMessage([0x90, note_number, vel]);
+    }, delay_ms);
 }
 
 
