@@ -2,15 +2,17 @@
 var midi = require('midi');
 var MidiOutput = new midi.output();
 var portCount = MidiOutput.getPortCount();
-//console.log(`Found ${portCount} MIDI ports:`);
+var portConnected = false;
+console.log(`Found ${portCount} MIDI ports:`);
 for (let portNumber = 0; portNumber < portCount; portNumber++) {
     let portName = MidiOutput.getPortName(portNumber)
-    //console.log(`Port ${portNumber}: ${portName}`);
-    if (portName == "TiMidity port 0") {
+    console.log(`Port ${portNumber}: ${portName}`);
+    if (portName == "TiMidity port 0" && !portConnected) {
         MidiOutput.openPort(portNumber);
-        break;
+        portConnected = true;
     }
 }
+if (!portConnected) {console.error("Couldn't find MIDI port"); process.exit(1);}
 
 
 var MIDI_TRANSPOSE = -12;
