@@ -18,3 +18,10 @@ DiscordBot.on("ready", async function(){
     var voiceConnection = await voiceChannel.join();
     voiceConnection.playConvertedStream(timidity.stdout);
 })
+
+DiscordBot.on("message", message => {
+    if (message.startsWith("!listen")) {
+        gClient.setChannel(message.content.substr(7));
+        message.react("🆗");
+    }
+});
