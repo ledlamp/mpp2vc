@@ -7,7 +7,7 @@ console.log(`Found ${portCount} MIDI ports:`);
 for (let portNumber = 0; portNumber < portCount; portNumber++) {
     let portName = MidiOutput.getPortName(portNumber)
     console.log(`Port ${portNumber}: ${portName}`);
-    if (portName == "TiMidity port 0" && !portConnected) {
+    if (portName == "TiMidity 128:0" && !portConnected) {
         MidiOutput.openPort(portNumber);
         portConnected = true;
     }
