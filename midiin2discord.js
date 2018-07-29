@@ -10,6 +10,7 @@ var DiscordBot = new Discord.Client();
 DiscordBot.login(require('./token'));
 
 DiscordBot.on("ready", async function(){
+    console.log("Discord Bot Ready");
     var voiceChannel = DiscordBot.channels.get("339628587747639296");
     var voiceConnection = await voiceChannel.join();
     voiceConnection.playConvertedStream(timidity.stdout);

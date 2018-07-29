@@ -40,6 +40,7 @@ var Client = require("mpp-client");
 var gClient = new Client("ws://www.multiplayerpiano.com:443");
 gClient.setChannel("lobby");
 gClient.start();
+gClient.on("hi", ()=> console.log("MPP Client Ready"));
 
 gClient.on("n", function(msg) {
     var t = msg.t - gClient.serverTimeOffset + 1000 - Date.now();
