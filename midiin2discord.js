@@ -1,15 +1,8 @@
 
-var ALSA = require("alsa");
 
-{
-    let device = 'default',                   // ALSA default device
-        channels = 2,                         // Stereo
-        rate = 44100,                         // Sample rate
-        format = ALSA.FORMAT_S16_LE,          // PCM format (signed 16 bit LE int)
-        access = ALSA.ACCESS_RW_INTERLEAVED,  // Access mode
-        latency = 500;                        // Desired latency in milliseconds
-    var AudioCapture = new ALSA.Capture(device, channels, rate, format, access, latency)
-}
+var child_process = require("child_process");
+var timidity = child_process.spawn('timidity', ['-iA', '-c timidity.cfg', '-o -']);
+
 
 
 var Discord = require("discord.js");
@@ -19,5 +12,5 @@ DiscordBot.login(require('./token'));
 DiscordBot.on("ready", async function(){
     var voiceChannel = DiscordBot.channels.get("339628587747639296");
     var voiceConnection = await voiceChannel.join();
-    voiceConnection.playStream(AudioCapture);
+    voiceConnection.playConvertedStream(timidity.stdout);
 })
