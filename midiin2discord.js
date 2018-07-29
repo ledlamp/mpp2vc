@@ -20,7 +20,7 @@ DiscordBot.on("ready", async function(){
 })
 
 DiscordBot.on("message", message => {
-    if (message.startsWith("!listen")) {
+    if (message.content.startsWith("!listen")) {
         gClient.setChannel(message.content.substr(7));
         message.react("🆗");
     }
