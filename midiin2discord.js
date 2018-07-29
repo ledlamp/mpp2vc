@@ -2,7 +2,7 @@
 
 var child_process = require("child_process");
 var timidity = child_process.spawn('timidity', ['-iA', '-c timidity.cfg', '-o -']);
-
+timidity.on("error", console.error);
 
 
 var Discord = require("discord.js");
