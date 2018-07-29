@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "alsa": "^0.0.2",
     "discord.js": "github:ledlamp/discord.js#no-timeout",
     "midi": "^0.9.5",
     "mpp-client": "^0.2.1",
