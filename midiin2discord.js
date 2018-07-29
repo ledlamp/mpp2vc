@@ -1,8 +1,11 @@
 
 
 var child_process = require("child_process");
-var timidity = child_process.spawn('timidity', ['-iA', '-c timidity.cfg', '-o -']);
+var timidity = child_process.spawn('timidity', ['-iA', '-c', 'timidity.cfg', '-o', '-']);
 timidity.on("error", console.error);
+timidity.stderr.on("data", data => {
+    console.log(data.toString());
+});
 
 
 var Discord = require("discord.js");
