@@ -1,7 +1,7 @@
 var exitHook = require('exit-hook');
 
 var child_process = require("child_process");
-var timidity = child_process.spawn('timidity', ['-iA', '-c', 'timidity.cfg', '-o', '-']);
+global.timidity = child_process.spawn('timidity', ['-iA', '-c', 'timidity.cfg', '-o', '-']);
 timidity.on("error", console.error);
 timidity.stderr.on("data", data => {
     console.log(data.toString());
@@ -12,7 +12,7 @@ exitHook(function(){
 
 
 var Discord = require("discord.js");
-var DiscordBot = new Discord.Client();
+global.DiscordBot = new Discord.Client();
 DiscordBot.login(require('./token'));
 
 DiscordBot.on("ready", async function(){
@@ -24,16 +24,4 @@ DiscordBot.on("ready", async function(){
     });
     var dispatcher = voiceConnection.playConvertedStream(timidity.stdout);
     dispatcher.on('end', reason => console.log("dispatcher ended:", reason));
-})
-
-DiscordBot.on("message", async message => {
-    if (message.content.startsWith("!listen")) {
-        await message.react("🆗");
-        gClient.setChannel(message.content.substr(7));
-    } else if (message.content.startsWith("!restart")) {
-        await message.react("🆗");
-        process.exit();
-    } else if (message.content == "!help") {
-        message.channel.send("`!listen <room name>` to listen to the room in voice chat.\n`!restart` if it's not working.\nGitHub: https://github.com/ledlamp/mppaudio2discordvoice")
-    }
 });
