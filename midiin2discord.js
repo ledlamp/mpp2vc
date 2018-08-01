@@ -16,12 +16,16 @@ DiscordBot.on("ready", async function(){
     console.log("Discord Bot Ready");
     var voiceChannel = DiscordBot.channels.get("339628587747639296");
     var voiceConnection = await voiceChannel.join();
-    voiceConnection.playConvertedStream(timidity.stdout);
+    var dispatcher = voiceConnection.playConvertedStream(timidity.stdout);
+    dispatcher.on('end', reason => console.log("dispatcher ended:", reason));
 })
 
-DiscordBot.on("message", message => {
+DiscordBot.on("message", async message => {
     if (message.content.startsWith("!listen")) {
+        await message.react("🆗");
         gClient.setChannel(message.content.substr(7));
-        message.react("🆗");
+    } else if (message.content.startsWith("!restart")) {
+        await message.react("🆗");
+        process.exit();
     }
 });
