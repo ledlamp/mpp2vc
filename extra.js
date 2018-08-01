@@ -13,12 +13,14 @@ DiscordBot.on("message", async message => {
 });
 
 // set nick to current listening channel
-let lastRoom;
-gClient.on("ch", msg => {
-    if (msg.ch._id !== lastRoom) {
-        let nick = `\udb40\udc00Listen to MPP (${msg.ch._id})`;
-        nick = nick.length > 32 ? nick.substr(0,30) + '…)' : nick;
-        DiscordBot.guilds.get('321819041348190249').me.setNickname(nick);
-        lastRoom = msg.ch._id;
-    }
-})
+DiscordBot.once("ready", function(){
+    let lastRoom;
+    gClient.on("ch", msg => {
+        if (msg.ch._id !== lastRoom) {
+            let nick = `\udb40\udc00Listen to MPP (${msg.ch._id})`;
+            nick = nick.length > 32 ? nick.substr(0,30) + '…)' : nick;
+            DiscordBot.guilds.get('321819041348190249').me.setNickname(nick);
+            lastRoom = msg.ch._id;
+        }
+    });
+});
