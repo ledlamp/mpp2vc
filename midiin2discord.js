@@ -6,6 +6,10 @@ timidity.on("error", console.error);
 timidity.stderr.on("data", data => {
     console.log(data.toString());
 });
+var exitHook = require('exit-hook');
+exitHook(function(){
+    timidity.kill();
+})
 
 
 var Discord = require("discord.js");
