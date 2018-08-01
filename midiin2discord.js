@@ -33,5 +33,7 @@ DiscordBot.on("message", async message => {
     } else if (message.content.startsWith("!restart")) {
         await message.react("🆗");
         process.exit();
+    } else if (message.content == "!help") {
+        message.channel.send("`!listen <room name>` to listen to the room in voice chat.\n`!restart` if it's not working.\nGitHub: https://github.com/ledlamp/mppaudio2discordvoice")
     }
 });
