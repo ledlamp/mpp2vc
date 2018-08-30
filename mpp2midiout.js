@@ -24,6 +24,7 @@ for(var oct = 0; oct < 7; oct++) {
     }
 }
 MIDI_KEY_NAMES.push("c7");
+var pressedKeys = {};
 var gMidiOutTest = function(note_name, vel, delay_ms) {
     var note_number = MIDI_KEY_NAMES.indexOf(note_name);
     if(note_number == -1) return;
@@ -31,7 +32,20 @@ var gMidiOutTest = function(note_name, vel, delay_ms) {
 
     //MidiOutput.wait(delay_ms).send([0x90, note_number, Math.floor(vel)]); //JZZ
     setTimeout(function(){
-        MidiOutput.sendMessage([0x90, note_number, vel]);
+        
+        // maintain on/off order
+        if (vel) { // if this is a start note
+            if (pressedKeys[note_number]) // and the key is pressed
+                MidiOutput.sendMessage([0x90, note_number, 0]); // send stop note before sending start note
+            MidiOutput.sendMessage([0x90, note_number, vel]); // go ahead…
+            pressedKeys[note_number] = true; // and the key is now pressed.
+        } else { // if this is a stop note
+            if (pressedKeys[note_number]) { // and the key is pressed
+                MidiOutput.sendMessage([0x90, note_number, vel]); // go ahead…
+                pressedKeys[note_number] = false; // and the key is now released.
+            } // else the key is already stopped; ignore.
+        }
+        
     }, delay_ms);
 }
 
@@ -60,7 +74,7 @@ gClient.on("n", function(msg) {
             gMidiOutTest(note.n, vel * 127, ms);
             setTimeout(()=>{
                 gMidiOutTest(note.n, 0, ms);
-            }, 3000);
+            }, 1000);
         }
     }
 });
