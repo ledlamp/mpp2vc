@@ -72,9 +72,7 @@ gClient.on("n", function(msg) {
             var vel = (typeof note.v !== "undefined")? parseFloat(note.v) : 0.5;
             if(vel < 0) vel = 0; else if (vel > 1) vel = 1;
             gMidiOutTest(note.n, vel * 127, ms);
-            setTimeout(()=>{
-                gMidiOutTest(note.n, 0, ms);
-            }, 1000);
+            setTimeout(gMidiOutTest, 1000, note.n, 0, ms); // limit note presses to 1 sec
         }
     }
 });
