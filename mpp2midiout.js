@@ -51,7 +51,7 @@ var gMidiOutTest = function(note_name, vel, delay_ms) {
 
 
 var Client = require("mpp-client");
-global.gClient = new Client("ws://www.multiplayerpiano.com:443");
+global.gClient = new Client("wss://www.multiplayerpiano.com:443");
 gClient.setChannel("lobby");
 gClient.start();
 gClient.on("hi", ()=> console.log("MPP Client Ready"));
