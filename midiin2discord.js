@@ -13,11 +13,11 @@ exitHook(function(){
 
 var Discord = require("discord.js");
 global.DiscordBot = new Discord.Client();
-DiscordBot.login(require('./token'));
+DiscordBot.login(process.env.TOKEN);
 
 DiscordBot.on("ready", async function(){
     console.log("Discord Bot Ready");
-    var voiceChannel = DiscordBot.channels.get("339628587747639296");
+    var voiceChannel = DiscordBot.channels.get(process.env.DCH || "339628587747639296");
     var voiceConnection = await voiceChannel.join();
     exitHook(function(){
         voiceChannel.leave();
